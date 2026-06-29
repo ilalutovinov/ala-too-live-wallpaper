@@ -2,40 +2,31 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Ala-Too Live Cam (Cropped)</title>
+    <title>Ala-Too Live Cam</title>
     <style>
-        body, html { 
-            margin: 0; 
-            padding: 0;
-            width: 100vw; 
-            height: 100vh; 
-            background: #000; 
-            overflow: hidden; 
+        body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+        
+        .video-wrapper {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
             position: relative;
         }
 
-        /* 
-           Стили для видео:
-           1. Располагаем по центру экрана.
-           2. Сдвигаем вниз на 4% (чтобы скрыть надписи сверху).
-           3. Увеличиваем масштаб на 1.05 (чтобы растянуть чистое видео без полос).
-        */
         #v { 
             position: absolute;
-            top: 54%; /* Базово 50% (центр) + 4% сдвиг вниз */
-            left: 50%;
-            width: 100vw;
-            height: 100vh;
-            min-width: 100vw; 
-            min-height: 100vh; 
+            top: -40px; 
+            left: 0;
+            width: 100vw; 
+            height: calc(100vh + 40px); 
             object-fit: cover;
-            transform: translate(-50%, -50%) scale(1.05); /* Центрирование и увеличение масштаба */
-            z-index: -1; /* Видео остается фоном */
         }
     </style>
 </head>
 <body>
-    <video id="v" autoplay muted loop playsinline></video>
+    <div class="video-wrapper">
+        <video id="v" autoplay muted loop playsinline></video>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
@@ -44,10 +35,7 @@
         let hls;
 
         function startStream() {
-            // Очищаем старый плеер перед перезапуском
-            if (hls) {
-                hls.destroy();
-            }
+            if (hls) { hls.destroy(); }
 
             hls = new Hls({
                 lowLatencyMode: true,
@@ -57,16 +45,10 @@
             hls.loadSource(source);
             hls.attachMedia(video);
             hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
-            
-            console.log("Поток обновлен и обрезан: " + new Date().toLocaleTimeString());
         }
 
-        // Запуск
         startStream();
-
-        // Авто-обновление каждые 10 минут (600 000 миллисекунд)
         setInterval(startStream, 600000);
-
     </script>
 </body>
 </html>
