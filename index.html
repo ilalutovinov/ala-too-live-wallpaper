@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { margin: 0; background: #000; overflow: hidden; }
+        #v { width: 100vw; height: 100vh; object-fit: cover; }
+    </style>
+</head>
+<body>
+    <video id="v" autoplay muted loop playsinline></video>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+        const video = document.getElementById('v');
+        // Ссылка на поток
+        const source = 'https://webcam.elcat.kg/Bishkek_Ala-Too_Square/tracks-v1/mono.m3u8';
+        let hls;
+
+        function startStream() {
+            // Если плеер уже был, аккуратно его убиваем перед новым стартом
+            if (hls) {
+                hls.destroy();
+            }
+
+            hls = new Hls({
+                lowLatencyMode: true,
+                maxBufferLength: 5 
+            });
+            
+            hls.loadSource(source);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+            
+            console.log("Поток обновлен: " + new Date().toLocaleTimeString());
+        }
+
+        // Запуск
+        startStream();
+
+        // Авто-обновление каждые 10 минут (10 * 60 * 1000 миллисекунд)
+        setInterval(startStream, 60000);
+    </script>
+</body>
+</html>
