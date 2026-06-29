@@ -1,26 +1,39 @@
-# 🇰🇬 Ala-Too Live Wallpaper 🇰🇬
+# 🇰🇬 Ala-Too Live Stream Wallpaper
 
-A lightweight, optimized live wallpaper for **Wallpaper Engine** featuring a real-time stream of Ala-Too Square in Bishkek, Kyrgyzstan.
+Легковесные и оптимизированные живые обои для **Wallpaper Engine**, транслирующие в реальном времени площадь Ала-Тоо в Бишкеке, Кыргызстан.
 
 [![](https://img.shields.io/badge/View-Live_Demo-brightgreen?style=for-the-badge&logo=youtube)](https://ilalutovinov.github.io/ala-too-live-wallpaper/)
 
-## ✨ Features
+---
 
-*   **Real-time Streaming:** Watch the heart of Bishkek live, directly on your desktop.
-*   **Auto-Recovery System:** Includes a smart 10-minute auto-refresh mechanism to ensure the stream stays fresh, preventing lag, buffer buildup, and memory leaks.
-*   **Highly Optimized:** Built with minimal code to ensure low system resource usage and seamless transitions when waking your PC from sleep mode.
+## 🛠 Как это реализовано
+Для создания этих обоев я нашел прямую ссылку на видеопоток с камеры, установленной на площади. 
+* **Поиск потока:** Я использовал инструменты разработчика в браузере (**F12 -> вкладка Network**), проанализировал запросы страницы и нашел прямой путь к HLS-потоку (видеопотоку) плеера на сайте [kg.camera](https://kg.camera/ru/camera/Bishkek_Ala-Too_Square).
+* **CSS-обрезка:** Оригинальный плеер на сайте перегружен элементами интерфейса: кнопками управления, логотипами и водяными знаками. Чтобы картинка выглядела эстетично на рабочем столе, я применил CSS-обрезку (контейнер с `overflow: hidden` и позиционированием), скрыв все лишнее и оставив только саму трансляцию.
+
+## 🚀 Настройка в Wallpaper Engine
+
+1. Скопируйте URL вашего сайта на GitHub Pages (например, `https://ilalutovinov.github.io/ala-too-live-wallpaper/`).
+2. Откройте **Wallpaper Engine**.
+3. Нажмите кнопку **"Открыть URL" (Open URL)**.
+4. Вставьте ссылку в поле ввода.
+5. **ВАЖНО:** Обязательно поставьте галочку **"Использовать режим потоковой передачи" (Use Streaming Mode)**.
+6. Нажмите **"ОК"** и наслаждайтесь видом!
+
+## ⚙️ Как поставить трансляцию своего города
+Вы можете легко сделать такие же обои для любого места:
+
+1. **Склонируйте** этот репозиторий к себе на компьютер.
+2. Откройте файл `index.html` в любом текстовом редакторе.
+3. **Замените ссылку** на видеопоток в коде на ту, которую вы нашли для вашей камеры.
+4. При необходимости подправьте параметры CSS (размеры или отступы), если у новой камеры другое соотношение сторон или нужно обрезать другие области.
+5. Залейте изменения на свой GitHub, и ваши личные живые обои готовы.
+
+## 🧠 Как работает код
+* **Отображение:** Страница использует стандартный HTML5-плеер, который напрямую подхватывает видеопоток.
+* **Система автовосстановления:** Чтобы избежать типичных проблем (накопление буфера, «зависание» картинки после сна компьютера или утечки памяти), я добавил JavaScript-скрипт, который **автоматически перезагружает страницу каждые 10 минут**. Это гарантирует, что трансляция всегда будет «свежей» и стабильной.
+* **Оптимизация:** Весь проект максимально облегчен — здесь нет тяжелых фреймворков. Это обеспечивает минимальную нагрузку на процессор и видеокарту, чтобы обои не мешали вам играть или работать.
 
 ---
 
-## 🚀 How to Set Up in Wallpaper Engine
-
-1.  Copy your GitHub Pages site URL (e.g., `https://ilalutovinov.github.io/ala-too-live-wallpaper/`).
-2.  Open **Wallpaper Engine**.
-3.  Click **"Open URL"**.
-4.  Paste the link into the URL field.
-5.  **IMPORTANT:** Make sure to check the **"Use Streaming Mode"** box.
-6.  Click **"OK"** and enjoy the view!
-
----
-
-*Bring a piece of Kyrgyzstan to your desktop!*
+*Принесите частичку любимого места на свой рабочий стол!*
