@@ -2,9 +2,36 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <title>Ala-Too Live Cam (Cropped)</title>
     <style>
-        body { margin: 0; background: #000; overflow: hidden; }
-        #v { width: 100vw; height: 100vh; object-fit: cover; }
+        body, html { 
+            margin: 0; 
+            padding: 0;
+            width: 100vw; 
+            height: 100vh; 
+            background: #000; 
+            overflow: hidden; 
+            position: relative;
+        }
+
+        /* 
+           Стили для видео:
+           1. Располагаем по центру экрана.
+           2. Сдвигаем вниз на 4% (чтобы скрыть надписи сверху).
+           3. Увеличиваем масштаб на 1.05 (чтобы растянуть чистое видео без полос).
+        */
+        #v { 
+            position: absolute;
+            top: 54%; /* Базово 50% (центр) + 4% сдвиг вниз */
+            left: 50%;
+            width: 100vw;
+            height: 100vh;
+            min-width: 100vw; 
+            min-height: 100vh; 
+            object-fit: cover;
+            transform: translate(-50%, -50%) scale(1.05); /* Центрирование и увеличение масштаба */
+            z-index: -1; /* Видео остается фоном */
+        }
     </style>
 </head>
 <body>
@@ -13,12 +40,11 @@
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
         const video = document.getElementById('v');
-        // Ссылка на поток
         const source = 'https://webcam.elcat.kg/Bishkek_Ala-Too_Square/tracks-v1/mono.m3u8';
         let hls;
 
         function startStream() {
-            // Если плеер уже был, аккуратно его убиваем перед новым стартом
+            // Очищаем старый плеер перед перезапуском
             if (hls) {
                 hls.destroy();
             }
@@ -32,14 +58,15 @@
             hls.attachMedia(video);
             hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
             
-            console.log("Поток обновлен: " + new Date().toLocaleTimeString());
+            console.log("Поток обновлен и обрезан: " + new Date().toLocaleTimeString());
         }
 
         // Запуск
         startStream();
 
-        // Авто-обновление каждые 10 минут (10 * 60 * 1000 миллисекунд)
-        setInterval(startStream, 60000);
+        // Авто-обновление каждые 10 минут (600 000 миллисекунд)
+        setInterval(startStream, 600000);
+
     </script>
 </body>
 </html>
